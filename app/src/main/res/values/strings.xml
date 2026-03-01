@@ -1,3 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">LAB03_Sample</string>
+    <string name="header">LAB03 Sample</string>
+    <string name="name">Register</string>
+    <string name="cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="submit" tools:ignore="ButtonCase">SUBMIT</string>
+
+
 </resources>
