@@ -30,20 +30,16 @@ class MainActivity : AppCompatActivity() {
 
     fun showAlertBox(
         context: Context,
-        name: String,
-        email: String,
-        phone: String,
-        password: String,
-        rePassword: String
+        formData: FormData
     ) {
 
         val builder = AlertDialog.Builder(context)
 
-        val message = "Email: $email\n" +
-                "Phone: $phone\n" +
-                "Passwords: ${if (password == rePassword) "Matching" else "Not Matching"}."
+        val message = "Email: ${formData.email}\n" +
+                "Phone: ${formData.phone}\n" +
+                "Passwords: ${if (formData.password == formData.rePassword) "Matching" else "Not Matching"}."
 
-        builder.setTitle("Welcome $name!")
+        builder.setTitle("Welcome ${formData.name}!")
         builder.setMessage(message)
 
         builder.setPositiveButton("Ok") { _, _ ->
@@ -56,14 +52,40 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
         btnSubmit.setOnClickListener {
-            showAlertBox(
-                this,
-                edtName.text.toString(),
-                edtEmail.text.toString(),
-                edtPhone.text.toString(),
-                edtPassword.text.toString(),
-                edtRePassword.text.toString()
+
+            val formData = FormData(
+                name = edtName.text.toString().trim(),
+                email = edtEmail.text.toString().trim(),
+                phone = edtPhone.text.toString().trim(),
+                password = edtPassword.text.toString().trim(),
+                rePassword = edtRePassword.text.toString().trim()
             )
+
+            when {
+                formData.name.isEmpty() -> {
+                    Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+                }
+
+                formData.email.isEmpty() -> {
+                    Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()
+                }
+
+                formData.phone.isEmpty() -> {
+                    Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show()
+                }
+
+                formData.password.isEmpty() -> {
+                    Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show()
+                }
+
+                formData.rePassword.isEmpty() -> {
+                    Toast.makeText(this, "Please retype your password", Toast.LENGTH_SHORT).show()
+                }
+
+                else -> {
+                    showAlertBox(this, formData)
+                }
+            }
         }
 
         btnCancel.setOnClickListener {
